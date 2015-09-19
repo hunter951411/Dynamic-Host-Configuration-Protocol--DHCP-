@@ -20,7 +20,14 @@ Hướng dẫn cấu hình DHCP Server trên CENTOS
 
 - Các tập tin cấu hình có thể chưa thêm các tab hoặc dòng trống để định dạng dễ dàng hơn, dòng bắt đầu với một dấu (#) được coi là ghi chú.
 
+- Để sử dụng ad-hoc mode, thêm vào sau của tập tin cấu hình: 
+
 | ddns-update-style ad-hoc; |
 |---------------------------|
+
+- Để sử dụng Recommended mode, thêm vào sau của tập tin cấu hình:
+
+| ddns-update-style interim; |
+|----------------------------|
 
 #3. Cấu hình DHCP Client
