@@ -1,33 +1,18 @@
-# Dynamic-Host-Configuration-Protocol--DHCP-
-Hướng dẫn cấu hình DHCP Server trên CENTOS
+# Dich-vu-cung-cap-dia-chi-ip-dong-DHCP-Server
+Dịch vụ cung cấp địa chỉ IP động (DHCP SERVER)
 
-- Dynamic Host Configuration Protocol (DHCP) là một giao thức mạng gán thông tin TCP/IP cho máy người dùng. Mỗi người dùng kết nối đến DHCP Server trung tâm, nơi trả về thông tin mạng cho người dùng gồm có địa chỉ IP, default gateway và DNS servers.
 
-#1. Tại sao lại sử dụng DHCP
+#1. Khái niệm
 
-- DHCP tự động cấu hình interface  network cho người dùng. Khi cấu hình hệ thống người dùng, người quản trị chọn DHCP và thay vì nhập địa chỉ IP, netmask, gateway hay DNS server. Người dùng cuối sẽ lấy những thông tin này từ DHCP Server. DHCP chỉ sử dụng nếu người quản trị muốn gắn địa chỉ IP cho hệ thống người dùng lớn. Thay vì cấu hình lại tất cả hệ thống, Admin chỉ cần chỉnh sửa tập tin cấu hình DHCP trên máy chủ cho các thiết lập mới của địa chỉ IP. Nếu các máy chủ DNS cho một tổ chức thay đổi, những thay đổi được thực hiện trên máy chủ DHCP, không phải trên cái máy người dùng. Một khi mạng được khởi động lại (hoặc người dùng tự khỏi động lại), những thay đổi sẽ có hiệu lực.
+- Khi quản trị một hệ thống mạng, thường ta phải cung cấp một địa chỉ IP cho mỗi máy tính khác nhau để các máy này có thể liên lạc được với nhau. Với mô hình mạng nhỏ(khoảng 10 đến 20 máy), việc cung cấp IP cho mỗi máy tính cho mạng thì tương đối dễ dàng cho một quản trị viên, anh ta chỉ việc sử dụng vài thao tác quen thuộc trong việc gán các địa chỉ IP. Nhưng nếu đối với một mô hình mạng lớn (20 máy trở lên) thì việc cung cấp IP như thế là thật sự mệt mỏi và khó khăn rồi, thỉnh thoảng nếu có vấn đề di chuyển thường xuyên giữa những máy tính với nhau thì đây là một công việc khá phức tạp và phí sức.
+- Chính vì những lý do như thế mà ngày nay, hầu hết trên tất cả các hệ điều hành cung cấp cho chúng ta một dịch vụ để giải quyết vấn đề cần thiết trên, đó là dịch vụ cung cấp địa chỉ IP động DHCP (Dynamic Host Configuration Protocol).
+- Không những cung cấp được IP mà dịch vụ trên còn đưa cho chúng ta nhiều chức năng để cung cấp những yếu tố khác cho các máy client, ví dụ như cung cấp địa chỉ của máy tính dùng để giải quyết tên miền DNS, địa chỉ của một Gateway router, địa chỉ máy WINS....
+- Thành phần của một DHCP server bao gồm 4 mục chính sau:
 
-- Hơn nữa, nếu một laptop hay một thiết bị di động của người dùng cấu hình dùng DHCP, nếu họ di chuyển từ địa điểm này đến địa điểm khác thì họ vẫn nhận được địa chỉ IP, netmask, getway, DNS server chính xác mà không cần phải cấu hình lại mỗi khi đến địa điểm mới.
+| Thành phần | Chức năng |
+|------------|-----------|
+| Options | Dùng để cung cấp địa chỉ IP, subnet mask, gateway. dns cho client |
+| Scope | Một đoạn địa chỉ được quy định trước trên DHCP server mà chúng ta sẽ dùng để gán cho các máy client |
+| Reservation | Là những đoạn địa chỉ dùng để "để dành" trong một scope mà chúng ta quy định ở trên |
+| Lease | Thời gian "cho thuê" địa chỉ IP đối với mỗi client |
 
-#2. Cấu hình DHCP Server
-
-- Để cấu hình một máy chủ DHCP, các tập tin cấu hình /etc/dhcpd.conf phải được tạo. Một tập tin mẫu có thể được tìm thấy tại /usr/share/doc/dhcp-<version>/dhcpd.conf.sample
-- DHCP cũng sử dụng file /var/lb/dhcp/dhcpd.leases để lưu trữ cơ sở dữ liệu cấp phát cho người dùng. 
-
-##2.1 Cấu hình file DHCP
-
-- Bước đầu tiên trong việc cấu hình một máy chủ DHCP là để tạo ra các tập tin cấu hình lưu trữ thông tin về mạng cho khách hàng. Tùy chọn Global có thể được khai báo cho tất cả các client, trong khi tùy trọng khác con thể được khác báo cho hệ thống từng đối tượng client riêng biệt.
-
-- Các tập tin cấu hình có thể chưa thêm các tab hoặc dòng trống để định dạng dễ dàng hơn, dòng bắt đầu với một dấu (#) được coi là ghi chú.
-
-- Để sử dụng ad-hoc mode, thêm vào sau của tập tin cấu hình: 
-
-| ddns-update-style ad-hoc; |
-|---------------------------|
-
-- Để sử dụng Recommended mode, thêm vào sau của tập tin cấu hình:
-
-| ddns-update-style interim; |
-|----------------------------|
-
-#3. Cấu hình DHCP Client
