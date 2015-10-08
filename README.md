@@ -16,3 +16,16 @@ Dịch vụ cung cấp địa chỉ IP động (DHCP SERVER)
 | Reservation | Là những đoạn địa chỉ dùng để "để dành" trong một scope mà chúng ta quy định ở trên |
 | Lease | Thời gian "cho thuê" địa chỉ IP đối với mỗi client |
 
+#2. Cài đặt
+
+- Để sử dụng được dịch vụ DHCP này, bạn phải cài đặt vào hệ thống thông thường bằng gói dịch vụ có sẵn trên đĩa CD có phần đuôi mở rộng là .rpm, ngoài ra chúng ta có thể cài đặt package ở dạng source code và tải gói này về từ trang web của GNU. Quá trình cài đặt bao gồm những bước sau:
+<ul>
+<li>Ở dạng phần đuôi mở rộng là .rpm, ta chạy lệnh:</li>
+    **rpm -ivh dhcp-*.rpm**
+<li>Ở dạng source code, ta biên dịch như sau:</li>
+tar -xzvf dhcp-*.rpm
+cd dhcp-*
+./configure
+make
+make install
+</ul>
