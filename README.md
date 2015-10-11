@@ -29,3 +29,7 @@ cd dhcp-*
 make
 make install
 </ul>
+
+- Sau khi hoàn tất xong quá trình cài đặt, kế tiếp chúng ta sẽ cấu hình để dịch vụ này có thể chạy theo tùy chính rcuar chúng ta bằng cách tạo và sửa đổi file /etc/dhcpd.conf. Tập tin này sẽ có nội dung sau:
+
+
