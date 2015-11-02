@@ -18,18 +18,45 @@ Dịch vụ cung cấp địa chỉ IP động (DHCP SERVER)
 
 #2. Cài đặt
 
-- Để sử dụng được dịch vụ DHCP này, bạn phải cài đặt vào hệ thống thông thường bằng gói dịch vụ có sẵn trên đĩa CD có phần đuôi mở rộng là .rpm, ngoài ra chúng ta có thể cài đặt package ở dạng source code và tải gói này về từ trang web của GNU. Quá trình cài đặt bao gồm những bước sau:
-<ul>
-<li>Ở dạng phần đuôi mở rộng là .rpm, ta chạy lệnh:</li>
-    **rpm -ivh dhcp-*.rpm**
-<li>Ở dạng source code, ta biên dịch như sau:</li>
-tar -xzvf dhcp-*.rpm
-cd dhcp-*
-./configure
-make
-make install
-</ul>
+- Để tải DHCP ta dùng lệnh:
 
-- Sau khi hoàn tất xong quá trình cài đặt, kế tiếp chúng ta sẽ cấu hình để dịch vụ này có thể chạy theo tùy chính rcuar chúng ta bằng cách tạo và sửa đổi file /etc/dhcpd.conf. Tập tin này sẽ có nội dung sau:
+**#yum -y install dhcp**
 
+- Ta tạo mới file cấu hình:
+
+- xác định tên server: 
+
+**option domain-name "hunter.com"**
+
+- Xác định tên hostname của server và địa chỉ IP:
+
+**option domain-name-servers server2.hunter.com;**
+
+- Xác định thời gian cho thuê mặc định:
+
+**default-lease-time 600;**
+
+- Giới hạn thời gian cho thuê lớn nhất:
+
+**max-lease-time 7200;**
+
+- Máy chủ DHCP server được khai báo là hợp lệ:
+
+**authoritative;**
+
+- Xác định địa chỉ mạng và subnet mask:
+
+**subnet 10.0.0.0 netmask 255.255.255.0{}**
+
+- Xác định dải địa chỉ cho thuê
+
+**range dynamic-bootp 10.0.0.10 10.0.0.254**
+
+- Xác định địa chỉ broadcast
+
+**option broadcast-address 10.0.0.255;**
+
+- Xác định default gateway
+
+**option routers 10.0.0.1**
 
